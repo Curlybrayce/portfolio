@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Moon, Sun, Github, ExternalLink, Mail, Linkedin, Terminal, Send, ArrowRight, X } from 'lucide-react';
+import { Moon, Sun, Github, ExternalLink, Mail, Linkedin, Terminal, Send, ArrowRight, X, ArrowUp } from 'lucide-react';
 import HeroSection from './HeroSection';
 import Footer from './Footer';
 
@@ -10,6 +10,17 @@ const Portfolio = () => {
     const [activeSection, setActiveSection] = useState('home');
     const [selectedProject, setSelectedProject] = useState(null);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+    const [showScrollTop, setShowScrollTop] = useState(false);
+    // const [activeLetter, setActiveLetter] = useState(-1);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollTop(window.scrollY > 500);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const projects = [
         {
@@ -213,6 +224,10 @@ const Portfolio = () => {
         </motion.div>
     );
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission
@@ -353,7 +368,7 @@ const Portfolio = () => {
                             {projects.map((project) => (
                                 <motion.div
                                     key={project.title}
-                                    className="group relative p-6 rounded-lg bg-gray-100 dark:bg-gray-800 cursor-pointer"
+                                    className="group relative p-6 rounded-xl bg-gray-100 dark:bg-gray-800 cursor-pointer"
                                     whileHover={{ y: -5 }}
                                     onClick={() => setSelectedProject(project)}
                                 >
@@ -508,7 +523,14 @@ const Portfolio = () => {
                 </motion.main>
             </AnimatePresence>
             <Footer />
-        </div>
+            <button
+                onClick={scrollToTop}
+                className={`fixed bottom-8 right-8 p-3 bg-blue-500 text-white rounded-full shadow-lg transition-all duration-300 ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                    }`}
+            >
+                <ArrowUp className="h-5 w-5" />
+            </button>
+        </div >
     );
 };
 
