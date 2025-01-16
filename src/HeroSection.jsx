@@ -84,15 +84,17 @@ const HeroSection = () => {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                         title='https://github.com/curlybrayce'
+                        target='_blank'
                     >
                         <Github className="h-6 w-6" />
                     </motion.a>
                     <motion.a
-                        href="linkedin.com/in/mustapha-babalola"
+                        href="https://linkedin.com/in/mustapha-babalola"
                         title="linkedin.com/in/mustapha-babalola"
                         className="p-2 hover:text-blue-500 transition-colors"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
+                        target='_blank'
                     >
                         <Linkedin className="h-6 w-6" />
                     </motion.a>
