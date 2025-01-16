@@ -24,6 +24,28 @@ const Portfolio = () => {
 
     const projects = [
         {
+            title: "Event Memory Collections Storage",
+            description: "Reministr is a platform designed to preserve and organize cherished memories, events, and collaborations. Built with a NodeJs backend, it provides a seamless, social media-like workspace for teams and individuals to store and share meaningful moments.",
+            longDescription: "An innovative platform for preserving and organizing cherished memories. Designed with a Notion-like interface, it supports collaboration, event management, and seamless storage for meaningful moments, powered by a robust Nodejs and Express Framework.",
+            tags: ["React", "NodeJS", "Redux", "ContextAPI"],
+            link: "https://reministr.com",
+            github: "#",
+            image: "reministr.png",
+            features: [
+                "Social media-like workspace",
+                "Collaboration tools",
+                "Event memory organization",
+                "Context API for state management",
+                "Robust NodeJS backend"
+            ],
+            stats: {
+                commits: 150,
+                contributors: 1,
+                stars: 80,
+                forks: 20
+            }
+        },
+        {
             title: "POS Dashboard",
             description: "Full-stack dashboard with real-time analytics, sales tracking, and inventory management.",
             longDescription: "A comprehensive point-of-sale management system featuring real-time analytics, sales tracking, inventory management, and seamless multi-user support. Ideal for businesses looking to optimize their operations and gain actionable insights.",
@@ -67,28 +89,6 @@ const Portfolio = () => {
                 forks: 15
             }
         },
-        {
-            title: "Event Memory Collections Storage",
-            description: "Reministr is a platform designed to preserve and organize cherished memories, events, and collaborations. Built with a NodeJs backend, it provides a seamless, social media-like workspace for teams and individuals to store and share meaningful moments.",
-            longDescription: "An innovative platform for preserving and organizing cherished memories. Designed with a Notion-like interface, it supports collaboration, event management, and seamless storage for meaningful moments, powered by a robust Nodejs and Express Framework.",
-            tags: ["React", "NodeJS", "Redux", "ContextAPI"],
-            link: "https://reministr.com",
-            github: "#",
-            image: "reministr.png",
-            features: [
-                "Social media-like workspace",
-                "Collaboration tools",
-                "Event memory organization",
-                "Context API for state management",
-                "Robust NodeJS backend"
-            ],
-            stats: {
-                commits: 150,
-                contributors: 1,
-                stars: 80,
-                forks: 20
-            }
-        }
     ];
 
     const skills = {
