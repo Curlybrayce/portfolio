@@ -12,7 +12,7 @@ const Footer = () => {
                         <span>using React & Tailwind</span>
                     </div>
                     <div className="flex gap-4">
-                        <a href="http://mob.freshbitepastries.com" target='_blank' title='No SSL' className="hover:text-blue-500 transition-colors">Source</a>
+                        <a href="https://github.com/Curlybrayce/portfolio" target='_blank' title='No SSL' className="hover:text-blue-500 transition-colors">Source</a>
                         <a href="tel:+2348164969155" className="hover:text-blue-500 transition-colors">Contact</a>
                         <a href="Mustapha Resume.pdf" download={true} className="hover:text-blue-500 transition-colors">Resume</a>
                     </div>

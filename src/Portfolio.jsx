@@ -72,8 +72,8 @@ const Portfolio = () => {
             description: "Web application for easy digital skill learning and skill acquisition.",
             longDescription: "A user-friendly platform for learning digital skills. Offers a wide range of courses, progress tracking, and interactive learning experiences, designed to empower individuals with practical knowledge.",
             tags: ["React", "NodeJs", "RESTApi"],
-            link: "#",
-            github: "https://tutourly.vercel.app/",
+            link: "https://tutourly.vercel.app/",
+            github: "https://github.com/Curlybrayce/quick-up",
             image: "tutourly.png",
             features: [
                 "Wide range of digital skill courses",
@@ -88,7 +88,7 @@ const Portfolio = () => {
                 stars: 10,
                 forks: 15
             }
-        },
+        }
     ];
 
     const skills = {
