@@ -1,37 +1,82 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Moon, Sun, Github, ExternalLink, Mail, Linkedin, Terminal, Send, ArrowRight } from 'lucide-react';
+import { Moon, Sun, Github, ExternalLink, Mail, Linkedin, Terminal, Send, ArrowRight, X } from 'lucide-react';
 import HeroSection from './HeroSection';
+import Footer from './Footer';
 
 const Portfolio = () => {
     const [darkMode, setDarkMode] = useState(true);
     const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
     const [activeSection, setActiveSection] = useState('home');
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const projects = [
         {
             title: "POS Dashboard",
             description: "Full-stack dashboard with real-time analytics, sales tracking, and inventory management.",
+            longDescription: "A comprehensive point-of-sale management system featuring real-time analytics, sales tracking, inventory management, and seamless multi-user support. Ideal for businesses looking to optimize their operations and gain actionable insights.",
             tags: ["Bootstrap", "PHP", "MySQL", "WebSocket"],
             link: "https://fb.freshbitepastries.com",
             github: "#",
-            image: "freshbite.png"
+            image: "freshbite.png",
+            features: [
+                "Real-time sales analytics",
+                "Inventory management system",
+                "Multi-user support",
+                "Customizable dashboards",
+                "WebSocket-based live updates"
+            ],
+            stats: {
+                commits: 120,
+                contributors: 1,
+                stars: 30,
+                forks: 10
+            }
         },
         {
             title: "Online Digital Skill Acquisition Platform",
             description: "Web application for easy digital skill learning and skill acquisition.",
+            longDescription: "A user-friendly platform for learning digital skills. Offers a wide range of courses, progress tracking, and interactive learning experiences, designed to empower individuals with practical knowledge.",
             tags: ["React", "NodeJs", "RESTApi"],
             link: "#",
             github: "https://tutourly.vercel.app/",
-            image: "tutourly.png"
+            image: "tutourly.png",
+            features: [
+                "Wide range of digital skill courses",
+                "Progress tracking",
+                "Interactive learning modules",
+                "User-friendly interface",
+                "REST API integration"
+            ],
+            stats: {
+                commits: 40,
+                contributors: 1,
+                stars: 10,
+                forks: 15
+            }
         },
         {
-            title: "Event Memory Collections",
-            description: "A Notion-like collaborative workspace built with .NET Core backend.",
+            title: "Event Memory Collections Storage",
+            description: "Reministr is a platform designed to preserve and organize cherished memories, events, and collaborations. Built with a NodeJs backend, it provides a seamless, social media-like workspace for teams and individuals to store and share meaningful moments.",
+            longDescription: "An innovative platform for preserving and organizing cherished memories. Designed with a Notion-like interface, it supports collaboration, event management, and seamless storage for meaningful moments, powered by a robust Nodejs and Express Framework.",
             tags: ["React", "NodeJS", "Redux", "ContextAPI"],
             link: "https://reministr.com",
             github: "#",
-            image: "/api/placeholder/400/300"
+            image: "reministr.png",
+            features: [
+                "Social media-like workspace",
+                "Collaboration tools",
+                "Event memory organization",
+                "Context API for state management",
+                "Robust NodeJS backend"
+            ],
+            stats: {
+                commits: 150,
+                contributors: 1,
+                stars: 80,
+                forks: 20
+            }
         }
     ];
 
@@ -65,11 +110,117 @@ const Portfolio = () => {
         }
     ];
 
+    const ProjectModal = ({ project, onClose }) => (
+        <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+        >
+            <motion.div
+                className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                onClick={e => e.stopPropagation()}
+            >
+                <div className="flex justify-between items-start mb-6">
+                    <h3 className="text-2xl font-bold">{project.title}</h3>
+                    <button
+                        onClick={onClose}
+                        className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full"
+                    >
+                        <X className="h-6 w-6" />
+                    </button>
+                </div>
+
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-64 object-cover rounded-lg mb-6"
+                />
+
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    {project.longDescription}
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h4 className="font-semibold mb-3">Key Features</h4>
+                        <ul className="space-y-2">
+                            {project.features.map((feature, index) => (
+                                <motion.li
+                                    key={index}
+                                    className="flex items-center gap-2"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                >
+                                    <ArrowRight className="h-4 w-4 text-blue-500" />
+                                    {feature}
+                                </motion.li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="font-semibold mb-3">Project Stats</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                            {Object.entries(project.stats).map(([key, value]) => (
+                                <div key={key} className="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                    <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                                        {key}
+                                    </div>
+                                    <div className="text-2xl font-bold">{value}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                    {project.tags.map((tag) => (
+                        <span
+                            key={tag}
+                            className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-full text-sm"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+
+                <div className="flex gap-4">
+                    <motion.a
+                        href={project.github}
+                        className="flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-gray-700 text-white rounded-lg"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Github className="h-4 w-4" />
+                        View Code
+                    </motion.a>
+                    <motion.a
+                        href={project.link}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <ExternalLink className="h-4 w-4" />
+                        Live Demo
+                    </motion.a>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission
-        console.log('Form submitted:', contactForm);
-        setContactForm({ name: '', email: '', message: '' });
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+            setShowSuccessMessage(false);
+            setContactForm({ name: '', email: '', message: '' });
+        }, 3000);
     };
 
     const pageTransition = {
@@ -88,7 +239,7 @@ const Portfolio = () => {
                             {['home', 'projects', 'blog', 'contact'].map((section) => (
                                 <button
                                     key={section}
-                                    onClick={() => setActiveSection(section)}
+                                    onClick={() => { setActiveSection(section); console.log(section) }}
                                     className={`capitalize ${activeSection === section ? 'text-blue-500' : ''}`}
                                 >
                                     {section}
@@ -165,7 +316,8 @@ const Portfolio = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        id='#skills'
+                        id='skills'
+                        name='skills'
                     >
                         <h3 className="text-2xl font-bold mb-8">Skills & Technologies</h3>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -193,15 +345,17 @@ const Portfolio = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
-                        id='#projects'
+                        id='projects'
+                        name='projects'
                     >
                         <h3 className="text-2xl font-bold mb-8">Featured Projects</h3>
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {projects.map((project) => (
                                 <motion.div
                                     key={project.title}
-                                    className="group relative p-6 rounded-lg bg-gray-100 dark:bg-gray-800"
+                                    className="group relative p-6 rounded-lg bg-gray-100 dark:bg-gray-800 cursor-pointer"
                                     whileHover={{ y: -5 }}
+                                    onClick={() => setSelectedProject(project)}
                                 >
                                     <img
                                         src={project.image}
@@ -245,8 +399,17 @@ const Portfolio = () => {
                         </div>
                     </motion.section>
 
+                    <AnimatePresence>
+                        {selectedProject && (
+                            <ProjectModal
+                                project={selectedProject}
+                                onClose={() => setSelectedProject(null)}
+                            />
+                        )}
+                    </AnimatePresence>
+
                     {/* Blog Section */}
-                    <motion.section
+                    {/* <motion.section
                         className="py-20"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -277,7 +440,7 @@ const Portfolio = () => {
                                 </motion.article>
                             ))}
                         </div>
-                    </motion.section>
+                    </motion.section> */}
 
                     {/* Contact Section */}
                     <motion.section
@@ -327,10 +490,24 @@ const Portfolio = () => {
                                 Send Message
                                 <Send className="h-4 w-4" />
                             </motion.button>
+
+                            <AnimatePresence>
+                                {showSuccessMessage && (
+                                    <motion.div
+                                        className="absolute top-0 left-0 right-0 bg-green-500 text-white p-4 rounded-lg"
+                                        initial={{ opacity: 0, y: -20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                    >
+                                        Message sent successfully!
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </form>
                     </motion.section>
                 </motion.main>
             </AnimatePresence>
+            <Footer />
         </div>
     );
 };

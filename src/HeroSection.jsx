@@ -1,10 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Github, Linkedin, Mail, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
+import Footer from './Footer';
 
+
+const MatrixRainText = ({ text, delay = 0 }) => {
+    const [displayText, setDisplayText] = useState('');
+    const characters = '!@#$%^&*()_+-=[]{}|;:,.<>?/';
+
+    useEffect(() => {
+        let currentIndex = 0;
+        let interval;
+
+        // Delay the start of animation
+        setTimeout(() => {
+            interval = setInterval(() => {
+                if (currentIndex <= text.length) {
+                    setDisplayText(prev => {
+                        const scrambled = Array.from({ length: text.length - currentIndex }, () =>
+                            characters[Math.floor(Math.random() * characters.length)]
+                        ).join('');
+                        return text.slice(0, currentIndex) + scrambled;
+                    });
+                    currentIndex++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 50);
+        }, delay);
+
+        return () => clearInterval(interval);
+    }, [text, delay]);
+
+    return <span>{displayText}</span>;
+};
 const HeroSection = () => {
     const [currentImage, setCurrentImage] = useState(0);
-    
+
+
     // Replace these with your actual image URLs
     const images = [
         "https://media.licdn.com/dms/image/v2/C5603AQEoskeU5Pg77Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1660750662087?e=1742428800&v=beta&t=8T8cI0z8Ihp7Uu3jbl1hmPife0D1xwBgCqs_XIw-318",
@@ -36,11 +69,13 @@ const HeroSection = () => {
         >
             {/* Text Content */}
             <div>
-                <h1 className="text-5xl font-bold mb-6">Mustapha O. Babalola</h1>
-                <h2 className="text-2xl text-gray-600 dark:text-gray-400 mb-8">Full-Stack Software Engineer</h2>
+                <h1 className="text-5xl font-bold mb-6">Mustapha O. Babalola </h1>
+                <h2 className="text-2xl text-gray-600 dark:text-gray-400 mb-8">
+                    <MatrixRainText text="Full-Stack Software Engineer" delay="1000" />
+                </h2>
                 <p className="text-lg max-w-2xl mb-8">
-                    I craft robust and scalable applications using PHP, JavaScript, Python and C#.
-                    Specialized in building high-performance web applications and APIs.
+                    I specialize in crafting robust and scalable applications using PHP, JavaScript (Node.js, React, TypeScript), Python (Django, Flask), and C# (.NET Core). With a strong focus on high-performance web applications, APIs, and user-centric solutions, I bring expertise in full-stack development, session management, and role-based authorization.
+                    I’m passionate about solving complex problems, exploring emerging technologies like Web3 and blockchain, and creating innovative tools like text editors and event service apps. My work reflects a commitment to quality, adaptability, and delivering impactful software solutions.
                 </p>
                 <div className="flex gap-4">
                     <motion.a
@@ -115,16 +150,16 @@ const HeroSection = () => {
                             <button
                                 key={index}
                                 onClick={() => setCurrentImage(index)}
-                                className={`w-2 h-2 rounded-full transition-colors ${
-                                    currentImage === index 
-                                        ? 'bg-white' 
-                                        : 'bg-white/50 hover:bg-white/75'
-                                }`}
+                                className={`w-2 h-2 rounded-full transition-colors ${currentImage === index
+                                    ? 'bg-white'
+                                    : 'bg-white/50 hover:bg-white/75'
+                                    }`}
                             />
                         ))}
                     </div>
                 </div>
             </div>
+            <Footer />
         </motion.section>
     );
 };
